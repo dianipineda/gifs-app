@@ -5,11 +5,16 @@
   <li>cuarto</li>
 </ul>
 <div class="row">
-  <div class="col-md-3 col-sm-6">
+  <div class="col-md-3 col-sm-6" *ngFor="let item of list">
     <div class="card mb-2 bg-dark text-center">
       <!-- TODO: crear imagen -->
+      <img
+        [src]="item.images.downsized_medium.url"
+        [alt]="item.title"
+        class="card-img-top"
+      />
       <div class="card-body text-white">
-        <p class="card-text">Hola mundo</p>
+        <p class="card-text">{{ item.title }}</p>
       </div>
     </div>
   </div>
