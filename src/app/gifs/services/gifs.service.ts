@@ -14,7 +14,7 @@ export class GifsService {
 
   constructor(private http: HttpClient) {
     this.loadLocalStorage();
-    console.log('GifsService ready');
+    //console.log('GifsService ready');
   }
 
   //este spread se puso para que el arreglo original este seguro, pues el spread hace una copia de el, en caso de ser modificado se modificara la copia y no el original
@@ -22,10 +22,10 @@ export class GifsService {
     if (this._tagsHistory == null) {
       localStorage.setItem('history', JSON.stringify([]));
       this._tagsHistory = JSON.parse(localStorage.getItem('history')!);
-      console.log('------------', this._tagsHistory);
+      //console.log('------------', this._tagsHistory);
       return this._tagsHistory;
     }
-    console.log('------------', this._tagsHistory);
+    //console.log('------------', this._tagsHistory);
     return [...this._tagsHistory];
   }
 
