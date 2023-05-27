@@ -1,22 +1,31 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Gif, SearchResponse } from '../interfaces/gifs.interfaces';
+import { log } from 'console';
 
 //const GIPHY_API_KEY = 'RS7BPNDslAJpOZL31gO95FnXFOPnsqTV'
 
 @Injectable({ providedIn: 'root' })
 export class GifsService {
   public gifsList: Gif[] = [];
-  private _tagsHistory: string[] = [];
+  private _tagsHistory: string[] = JSON.parse(localStorage.getItem('history')!);
   private apiKey: string = 'RS7BPNDslAJpOZL31gO95FnXFOPnsqTV';
   private serviceUrl: string = 'http://api.giphy.com/v1/gifs';
 
   constructor(private http: HttpClient) {
     this.loadLocalStorage();
-    console.log('GifsService ready');
+    //console.log('GifsService ready');
   }
+
   //este spread se puso para que el arreglo original este seguro, pues el spread hace una copia de el, en caso de ser modificado se modificara la copia y no el original
-  get TagsHistory() {
+  get TagsHistory(): string[] {
+    if (this._tagsHistory == null) {
+      localStorage.setItem('history', JSON.stringify([]));
+      this._tagsHistory = JSON.parse(localStorage.getItem('history')!);
+      //console.log('------------', this._tagsHistory);
+      return this._tagsHistory;
+    }
+    //console.log('------------', this._tagsHistory);
     return [...this._tagsHistory];
   }
 
@@ -24,9 +33,8 @@ export class GifsService {
     localStorage.setItem('history', JSON.stringify(this._tagsHistory));
   }
 
-  private loadLocalStorage(): void {
+  public loadLocalStorage(): void {
     if (localStorage.getItem('history')) return;
-
     this._tagsHistory = JSON.parse(localStorage.getItem('history')!);
   }
 

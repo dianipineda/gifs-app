@@ -7,9 +7,11 @@ import { GifsService } from 'src/app/gifs/services/gifs.service';
   styleUrls: ['./siderBar.component.css'],
 })
 export class SiderBarComponent {
-  constructor(private gifsService: GifsService) {}
+  constructor(private gifsService: GifsService) {
+    if (this.gifsService.TagsHistory.length > 0)
+      this.searchGif(this.gifsService.TagsHistory[0]);
+  }
 
-  //este getter viene a ser el array para mi ngFor en el template
   get items(): string[] {
     return this.gifsService.TagsHistory;
   }
@@ -18,6 +20,3 @@ export class SiderBarComponent {
     this.gifsService.searchTag(item);
   }
 }
-//TODO:
-//todo la propiedad getter de items debe igualarse al loadStorage para que los botones no me desaparezcan cuando recargo el navegador
-//! no se como hacer que me traigan los items del primer valor de la lista ( revisarlo)
